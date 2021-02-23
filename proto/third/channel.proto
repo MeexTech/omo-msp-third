@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service ChannelService {
+    rpc AddOne(ReqChannelAdd) returns (ReplyChannelInfo) {}
+    rpc GetOne(RequestInfo) returns (ReplyChannelInfo) {}
+    rpc GetList(RequestPage) returns (ReplyChannelList) {}
+    rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+}
+
+message ChannelInfo {
+    string uid = 1;
+    uint64 id = 2;
+    int64 created = 3;
+    int64 updated = 4;
+    string creator = 5;
+    string operator = 6;
+    string name = 7;
+    string remark = 8;
+    string phone = 9;
+    string secret = 10;
+    repeated string tags = 11;
+}
+
+message ReqChannelAdd {
+    string name = 1;
+    string phone = 5;
+    string remark = 6;
+    string operator = 8;
+    string passwords = 9;
+    string entity = 10;
+    string portrait = 11;
+    repeated string tags = 13;
+}
+
+message ReqChannelUpdate {
+    string uid = 1;
+    string name = 2;
+    string nickName = 3;
+    string phone = 4;
+    string job = 5;
+    string remark = 6;
+    string operator = 8;
+    string portrait = 9;
+}
+
+message ReqChannelTags{
+    string uid = 1;
+    string operator = 2;
+    repeated string tags = 3;
+}
+
+message ReplyChannelInfo {
+    ChannelInfo info = 1;
+    ReplyStatus status = 2;
+}
+
+message ReqChannelList {
+    repeated string list = 4;
+}
+
+message ReplyChannelList {
+    uint64 total = 1;
+    uint32 pageMax = 2;
+    uint32 pageNow = 3;
+    repeated ChannelInfo list = 4;
+    ReplyStatus status = 5;
+}

@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service PartnerService {
+  rpc AddOne(ReqPartnerAdd) returns (ReplyPartnerInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyPartnerInfo) {}
+  rpc GetList(RequestPage) returns (ReplyPartnerList) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc CreateSecret(RequestInfo) returns (ReplyPartnerSecret) {}
+}
+
+message PartnerInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string remark = 8;
+  string phone = 9;
+  string secret = 10;
+  repeated string tags = 11;
+}
+
+message ReqPartnerAdd {
+  string name = 1;
+  string phone = 2;
+  string remark = 3;
+  string operator = 4;
+  repeated string tags = 5;
+}
+
+message ReqPartnerUpdate {
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string phone = 4;
+  string operator = 8;
+}
+
+message ReqPartnerTags{
+  string uid = 1;
+  string operator = 2;
+  repeated string tags = 3;
+}
+
+message ReplyPartnerInfo {
+  PartnerInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReqPartnerList {
+  repeated string list = 4;
+}
+
+message ReplyPartnerSecret {
+  ReplyStatus status = 1;
+  string uid = 2;
+  string secret = 3;
+}
+
+message ReplyPartnerList {
+  uint64 total = 1;
+  uint32 pageMax = 2;
+  uint32 pageNow = 3;
+  repeated PartnerInfo list = 4;
+  ReplyStatus status = 5;
+}
+
+
+
