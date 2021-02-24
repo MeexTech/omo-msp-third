@@ -37,8 +37,10 @@ type PartnerService interface {
 	AddOne(ctx context.Context, in *ReqPartnerAdd, opts ...client.CallOption) (*ReplyPartnerInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerInfo, error)
 	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyPartnerList, error)
+	UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	CreateSecret(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerSecret, error)
+	GetBySecret(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerInfo, error)
 }
 
 type partnerService struct {
@@ -83,6 +85,16 @@ func (c *partnerService) GetList(ctx context.Context, in *RequestPage, opts ...c
 	return out, nil
 }
 
+func (c *partnerService) UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerInfo, error) {
+	req := c.c.NewRequest(c.name, "PartnerService.UpdateOne", in)
+	out := new(ReplyPartnerInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *partnerService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
 	req := c.c.NewRequest(c.name, "PartnerService.RemoveOne", in)
 	out := new(ReplyInfo)
@@ -103,14 +115,26 @@ func (c *partnerService) CreateSecret(ctx context.Context, in *RequestInfo, opts
 	return out, nil
 }
 
+func (c *partnerService) GetBySecret(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerInfo, error) {
+	req := c.c.NewRequest(c.name, "PartnerService.GetBySecret", in)
+	out := new(ReplyPartnerInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for PartnerService service
 
 type PartnerServiceHandler interface {
 	AddOne(context.Context, *ReqPartnerAdd, *ReplyPartnerInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyPartnerInfo) error
 	GetList(context.Context, *RequestPage, *ReplyPartnerList) error
+	UpdateOne(context.Context, *RequestInfo, *ReplyPartnerInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	CreateSecret(context.Context, *RequestInfo, *ReplyPartnerSecret) error
+	GetBySecret(context.Context, *RequestInfo, *ReplyPartnerInfo) error
 }
 
 func RegisterPartnerServiceHandler(s server.Server, hdlr PartnerServiceHandler, opts ...server.HandlerOption) error {
@@ -118,8 +142,10 @@ func RegisterPartnerServiceHandler(s server.Server, hdlr PartnerServiceHandler, 
 		AddOne(ctx context.Context, in *ReqPartnerAdd, out *ReplyPartnerInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error
 		GetList(ctx context.Context, in *RequestPage, out *ReplyPartnerList) error
+		UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		CreateSecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerSecret) error
+		GetBySecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error
 	}
 	type PartnerService struct {
 		partnerService
@@ -144,10 +170,18 @@ func (h *partnerServiceHandler) GetList(ctx context.Context, in *RequestPage, ou
 	return h.PartnerServiceHandler.GetList(ctx, in, out)
 }
 
+func (h *partnerServiceHandler) UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error {
+	return h.PartnerServiceHandler.UpdateOne(ctx, in, out)
+}
+
 func (h *partnerServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
 	return h.PartnerServiceHandler.RemoveOne(ctx, in, out)
 }
 
 func (h *partnerServiceHandler) CreateSecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerSecret) error {
 	return h.PartnerServiceHandler.CreateSecret(ctx, in, out)
+}
+
+func (h *partnerServiceHandler) GetBySecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error {
+	return h.PartnerServiceHandler.GetBySecret(ctx, in, out)
 }

@@ -35,6 +35,7 @@ var _ server.Option
 
 type ChannelService interface {
 	AddOne(ctx context.Context, in *ReqChannelAdd, opts ...client.CallOption) (*ReplyChannelInfo, error)
+	UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyChannelInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyChannelInfo, error)
 	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyChannelList, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
@@ -54,6 +55,16 @@ func NewChannelService(name string, c client.Client) ChannelService {
 
 func (c *channelService) AddOne(ctx context.Context, in *ReqChannelAdd, opts ...client.CallOption) (*ReplyChannelInfo, error) {
 	req := c.c.NewRequest(c.name, "ChannelService.AddOne", in)
+	out := new(ReplyChannelInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelService) UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyChannelInfo, error) {
+	req := c.c.NewRequest(c.name, "ChannelService.UpdateOne", in)
 	out := new(ReplyChannelInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -96,6 +107,7 @@ func (c *channelService) RemoveOne(ctx context.Context, in *RequestInfo, opts ..
 
 type ChannelServiceHandler interface {
 	AddOne(context.Context, *ReqChannelAdd, *ReplyChannelInfo) error
+	UpdateOne(context.Context, *RequestInfo, *ReplyChannelInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyChannelInfo) error
 	GetList(context.Context, *RequestPage, *ReplyChannelList) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
@@ -104,6 +116,7 @@ type ChannelServiceHandler interface {
 func RegisterChannelServiceHandler(s server.Server, hdlr ChannelServiceHandler, opts ...server.HandlerOption) error {
 	type channelService interface {
 		AddOne(ctx context.Context, in *ReqChannelAdd, out *ReplyChannelInfo) error
+		UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyChannelInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyChannelInfo) error
 		GetList(ctx context.Context, in *RequestPage, out *ReplyChannelList) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
@@ -121,6 +134,10 @@ type channelServiceHandler struct {
 
 func (h *channelServiceHandler) AddOne(ctx context.Context, in *ReqChannelAdd, out *ReplyChannelInfo) error {
 	return h.ChannelServiceHandler.AddOne(ctx, in, out)
+}
+
+func (h *channelServiceHandler) UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyChannelInfo) error {
+	return h.ChannelServiceHandler.UpdateOne(ctx, in, out)
 }
 
 func (h *channelServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *ReplyChannelInfo) error {

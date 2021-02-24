@@ -8,8 +8,10 @@ service PartnerService {
   rpc AddOne(ReqPartnerAdd) returns (ReplyPartnerInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyPartnerInfo) {}
   rpc GetList(RequestPage) returns (ReplyPartnerList) {}
+  rpc UpdateOne(RequestInfo) returns (ReplyPartnerInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc CreateSecret(RequestInfo) returns (ReplyPartnerSecret) {}
+  rpc GetBySecret(RequestInfo) returns (ReplyPartnerInfo) {}
 }
 
 message PartnerInfo {

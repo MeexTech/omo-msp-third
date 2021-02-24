@@ -6,6 +6,7 @@ import "proto/third/common.proto";
 
 service ChannelService {
     rpc AddOne(ReqChannelAdd) returns (ReplyChannelInfo) {}
+    rpc UpdateOne(RequestInfo) returns (ReplyChannelInfo) {}
     rpc GetOne(RequestInfo) returns (ReplyChannelInfo) {}
     rpc GetList(RequestPage) returns (ReplyChannelList) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
