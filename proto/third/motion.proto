@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service MotionService {
+  rpc AddOne(ReqMotionAdd) returns (ReplyMotionInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyMotionInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyMotionList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+}
+
+message MotionInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string app = 9;
+  string sn = 10;
+  string user = 11;
+  string event = 12;
+  string scene = 13;
+  uint32 count = 14;
+}
+
+message ReqMotionAdd{
+  string app = 1;
+  string sn = 2;
+  string event = 3;
+  string scene = 4;
+  string operator = 5;
+  uint32 count = 6;
+}
+
+message ReplyMotionInfo {
+  ReplyStatus status = 1;
+  MotionInfo info = 2;
+}
+
+message ReplyMotionList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated MotionInfo list = 16;
+}

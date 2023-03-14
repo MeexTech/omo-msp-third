@@ -12,6 +12,9 @@ service PartnerService {
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc CreateSecret(RequestInfo) returns (ReplyPartnerSecret) {}
   rpc GetBySecret(RequestInfo) returns (ReplyPartnerInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyPartnerList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
 }
 
 message PartnerInfo {

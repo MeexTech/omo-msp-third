@@ -10,6 +10,9 @@ service ChannelService {
     rpc GetOne(RequestInfo) returns (ReplyChannelInfo) {}
     rpc GetList(RequestPage) returns (ReplyChannelList) {}
     rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+    rpc GetByFilter(RequestFilter) returns (ReplyChannelList) {}
+    rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+    rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
 }
 
 message ChannelInfo {

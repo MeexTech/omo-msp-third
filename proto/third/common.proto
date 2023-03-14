@@ -3,15 +3,6 @@ syntax = "proto3";
 package omo.msp.third;
 option go_package= "proto/third";
 
-enum ResultCode {
-  Success = 0;
-  MaxLimit = 1;
-  Repeated = 2;
-  NotExisted = 3;
-  DBException = 4;
-  Empty = 5;
-}
-
 message RequestInfo {
   string uid = 1;
   string operator = 2;
@@ -27,12 +18,37 @@ message RequestPage {
   uint32 page = 2;
 }
 
+message RequestFilter {
+  string scene = 1;
+  string field = 2;
+  string value = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated string list = 7;
+}
+
+message RequestUpdate {
+  string scene = 1;
+  string uid = 2;
+  string field = 3;
+  string value = 4;
+  string operator = 5;
+  repeated string list = 20;
+}
+
 message ReplyStatus {
-  ResultCode code = 1;
+  uint32 code = 1;
   string msg = 2;
 }
 
 message ReplyInfo {
   ReplyStatus status = 1;
   string uid = 2;
+}
+
+message ReplyStatistic {
+  ReplyStatus status = 1;
+  string key = 2;
+  string owner = 3;
+  uint32 count = 4;
 }

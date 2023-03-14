@@ -41,6 +41,9 @@ type PartnerService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	CreateSecret(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerSecret, error)
 	GetBySecret(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyPartnerInfo, error)
+	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyPartnerList, error)
+	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
+	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type partnerService struct {
@@ -125,6 +128,36 @@ func (c *partnerService) GetBySecret(ctx context.Context, in *RequestInfo, opts 
 	return out, nil
 }
 
+func (c *partnerService) GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyPartnerList, error) {
+	req := c.c.NewRequest(c.name, "PartnerService.GetByFilter", in)
+	out := new(ReplyPartnerList)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *partnerService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
+	req := c.c.NewRequest(c.name, "PartnerService.GetStatistic", in)
+	out := new(ReplyStatistic)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *partnerService) UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "PartnerService.UpdateByFilter", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for PartnerService service
 
 type PartnerServiceHandler interface {
@@ -135,6 +168,9 @@ type PartnerServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	CreateSecret(context.Context, *RequestInfo, *ReplyPartnerSecret) error
 	GetBySecret(context.Context, *RequestInfo, *ReplyPartnerInfo) error
+	GetByFilter(context.Context, *RequestFilter, *ReplyPartnerList) error
+	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
+	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 }
 
 func RegisterPartnerServiceHandler(s server.Server, hdlr PartnerServiceHandler, opts ...server.HandlerOption) error {
@@ -146,6 +182,9 @@ func RegisterPartnerServiceHandler(s server.Server, hdlr PartnerServiceHandler, 
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		CreateSecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerSecret) error
 		GetBySecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error
+		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyPartnerList) error
+		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
+		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 	}
 	type PartnerService struct {
 		partnerService
@@ -184,4 +223,16 @@ func (h *partnerServiceHandler) CreateSecret(ctx context.Context, in *RequestInf
 
 func (h *partnerServiceHandler) GetBySecret(ctx context.Context, in *RequestInfo, out *ReplyPartnerInfo) error {
 	return h.PartnerServiceHandler.GetBySecret(ctx, in, out)
+}
+
+func (h *partnerServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyPartnerList) error {
+	return h.PartnerServiceHandler.GetByFilter(ctx, in, out)
+}
+
+func (h *partnerServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
+	return h.PartnerServiceHandler.GetStatistic(ctx, in, out)
+}
+
+func (h *partnerServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error {
+	return h.PartnerServiceHandler.UpdateByFilter(ctx, in, out)
 }

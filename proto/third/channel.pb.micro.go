@@ -39,6 +39,9 @@ type ChannelService interface {
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyChannelInfo, error)
 	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyChannelList, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
+	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyChannelList, error)
+	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
+	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type channelService struct {
@@ -103,6 +106,36 @@ func (c *channelService) RemoveOne(ctx context.Context, in *RequestInfo, opts ..
 	return out, nil
 }
 
+func (c *channelService) GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyChannelList, error) {
+	req := c.c.NewRequest(c.name, "ChannelService.GetByFilter", in)
+	out := new(ReplyChannelList)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelService) GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error) {
+	req := c.c.NewRequest(c.name, "ChannelService.GetStatistic", in)
+	out := new(ReplyStatistic)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *channelService) UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "ChannelService.UpdateByFilter", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for ChannelService service
 
 type ChannelServiceHandler interface {
@@ -111,6 +144,9 @@ type ChannelServiceHandler interface {
 	GetOne(context.Context, *RequestInfo, *ReplyChannelInfo) error
 	GetList(context.Context, *RequestPage, *ReplyChannelList) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
+	GetByFilter(context.Context, *RequestFilter, *ReplyChannelList) error
+	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
+	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 }
 
 func RegisterChannelServiceHandler(s server.Server, hdlr ChannelServiceHandler, opts ...server.HandlerOption) error {
@@ -120,6 +156,9 @@ func RegisterChannelServiceHandler(s server.Server, hdlr ChannelServiceHandler, 
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyChannelInfo) error
 		GetList(ctx context.Context, in *RequestPage, out *ReplyChannelList) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
+		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyChannelList) error
+		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
+		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 	}
 	type ChannelService struct {
 		channelService
@@ -150,4 +189,16 @@ func (h *channelServiceHandler) GetList(ctx context.Context, in *RequestPage, ou
 
 func (h *channelServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
 	return h.ChannelServiceHandler.RemoveOne(ctx, in, out)
+}
+
+func (h *channelServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyChannelList) error {
+	return h.ChannelServiceHandler.GetByFilter(ctx, in, out)
+}
+
+func (h *channelServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
+	return h.ChannelServiceHandler.GetStatistic(ctx, in, out)
+}
+
+func (h *channelServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error {
+	return h.ChannelServiceHandler.UpdateByFilter(ctx, in, out)
 }
