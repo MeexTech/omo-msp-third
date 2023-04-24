@@ -28,6 +28,7 @@ message MotionInfo {
   string event = 12;
   string scene = 13;
   uint32 count = 14;
+  string content = 15;
 }
 
 message ReqMotionAdd{
@@ -37,6 +38,7 @@ message ReqMotionAdd{
   string scene = 4;
   string operator = 5;
   uint32 count = 6;
+  string content = 7;
 }
 
 message ReplyMotionInfo {
