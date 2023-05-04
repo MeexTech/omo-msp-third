@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service CarouselService {
+  rpc AddOne(ReqCarouselAdd) returns (ReplyCarouselInfo) {}
+  rpc UpdateOne(RequestInfo) returns (ReplyCarouselInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyCarouselInfo) {}
+  rpc GetList(RequestPage) returns (ReplyCarouselList) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyCarouselList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+}
+
+message CarouselInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string owner = 8;
+  repeated QuoteInfo quotes = 31;
+}
+
+message QuoteInfo {
+  uint32 type = 1;
+  int64 updated = 2;
+  string uid = 3;
+  string title = 4;
+  string asset = 5;
+}
+
+message ReqCarouselAdd {
+  string name = 1;
+  string owner = 2;
+  string remark = 3;
+  string operator = 4;
+  repeated QuoteInfo quotes = 21;
+}
+
+message ReqCarouselUpdate {
+  string uid = 1;
+  string name = 2;
+  string operator = 3;
+  repeated QuoteInfo quotes = 21;
+}
+
+message ReplyCarouselInfo {
+  CarouselInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyCarouselList {
+  ReplyStatus status = 1;
+  uint64 total = 2;
+  uint32 pageMax = 3;
+  uint32 pageNow = 4;
+  repeated CarouselInfo list = 21;
+}
