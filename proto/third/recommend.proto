@@ -6,7 +6,7 @@ import "proto/third/common.proto";
 
 service RecommendService {
   rpc AddOne(ReqRecommendAdd) returns (ReplyRecommendInfo) {}
-  rpc UpdateOne(RequestInfo) returns (ReplyRecommendInfo) {}
+  rpc UpdateOne(ReqRecommendUpdate) returns (ReplyRecommendInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyRecommendInfo) {}
   rpc GetList(RequestPage) returns (ReplyRecommendList) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
@@ -41,6 +41,7 @@ message ReqRecommendUpdate {
   string uid = 1;
   string name = 2;
   string operator = 3;
+  uint32 type = 4;
   repeated string targets = 21;
 }
 

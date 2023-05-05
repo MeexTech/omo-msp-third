@@ -6,6 +6,7 @@ option go_package= "proto/third";
 message RequestInfo {
   string uid = 1;
   string operator = 2;
+  uint32 type = 3;
 }
 
 message RequestIDInfo {
@@ -16,6 +17,7 @@ message RequestIDInfo {
 message RequestPage {
   uint32 number = 1;
   uint32 page = 2;
+  string owner = 3;
 }
 
 message RequestFilter {

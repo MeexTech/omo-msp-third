@@ -6,7 +6,7 @@ import "proto/third/common.proto";
 
 service CarouselService {
   rpc AddOne(ReqCarouselAdd) returns (ReplyCarouselInfo) {}
-  rpc UpdateOne(RequestInfo) returns (ReplyCarouselInfo) {}
+  rpc UpdateOne(ReqCarouselUpdate) returns (ReplyCarouselInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyCarouselInfo) {}
   rpc GetList(RequestPage) returns (ReplyCarouselList) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}

@@ -35,7 +35,7 @@ var _ server.Option
 
 type CarouselService interface {
 	AddOne(ctx context.Context, in *ReqCarouselAdd, opts ...client.CallOption) (*ReplyCarouselInfo, error)
-	UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyCarouselInfo, error)
+	UpdateOne(ctx context.Context, in *ReqCarouselUpdate, opts ...client.CallOption) (*ReplyCarouselInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyCarouselInfo, error)
 	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyCarouselList, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
@@ -66,7 +66,7 @@ func (c *carouselService) AddOne(ctx context.Context, in *ReqCarouselAdd, opts .
 	return out, nil
 }
 
-func (c *carouselService) UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyCarouselInfo, error) {
+func (c *carouselService) UpdateOne(ctx context.Context, in *ReqCarouselUpdate, opts ...client.CallOption) (*ReplyCarouselInfo, error) {
 	req := c.c.NewRequest(c.name, "CarouselService.UpdateOne", in)
 	out := new(ReplyCarouselInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -140,7 +140,7 @@ func (c *carouselService) UpdateByFilter(ctx context.Context, in *RequestUpdate,
 
 type CarouselServiceHandler interface {
 	AddOne(context.Context, *ReqCarouselAdd, *ReplyCarouselInfo) error
-	UpdateOne(context.Context, *RequestInfo, *ReplyCarouselInfo) error
+	UpdateOne(context.Context, *ReqCarouselUpdate, *ReplyCarouselInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyCarouselInfo) error
 	GetList(context.Context, *RequestPage, *ReplyCarouselList) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
@@ -152,7 +152,7 @@ type CarouselServiceHandler interface {
 func RegisterCarouselServiceHandler(s server.Server, hdlr CarouselServiceHandler, opts ...server.HandlerOption) error {
 	type carouselService interface {
 		AddOne(ctx context.Context, in *ReqCarouselAdd, out *ReplyCarouselInfo) error
-		UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyCarouselInfo) error
+		UpdateOne(ctx context.Context, in *ReqCarouselUpdate, out *ReplyCarouselInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyCarouselInfo) error
 		GetList(ctx context.Context, in *RequestPage, out *ReplyCarouselList) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
@@ -175,7 +175,7 @@ func (h *carouselServiceHandler) AddOne(ctx context.Context, in *ReqCarouselAdd,
 	return h.CarouselServiceHandler.AddOne(ctx, in, out)
 }
 
-func (h *carouselServiceHandler) UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyCarouselInfo) error {
+func (h *carouselServiceHandler) UpdateOne(ctx context.Context, in *ReqCarouselUpdate, out *ReplyCarouselInfo) error {
 	return h.CarouselServiceHandler.UpdateOne(ctx, in, out)
 }
 

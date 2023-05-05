@@ -35,7 +35,7 @@ var _ server.Option
 
 type RecommendService interface {
 	AddOne(ctx context.Context, in *ReqRecommendAdd, opts ...client.CallOption) (*ReplyRecommendInfo, error)
-	UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRecommendInfo, error)
+	UpdateOne(ctx context.Context, in *ReqRecommendUpdate, opts ...client.CallOption) (*ReplyRecommendInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRecommendInfo, error)
 	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyRecommendList, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
@@ -66,7 +66,7 @@ func (c *recommendService) AddOne(ctx context.Context, in *ReqRecommendAdd, opts
 	return out, nil
 }
 
-func (c *recommendService) UpdateOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRecommendInfo, error) {
+func (c *recommendService) UpdateOne(ctx context.Context, in *ReqRecommendUpdate, opts ...client.CallOption) (*ReplyRecommendInfo, error) {
 	req := c.c.NewRequest(c.name, "RecommendService.UpdateOne", in)
 	out := new(ReplyRecommendInfo)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -140,7 +140,7 @@ func (c *recommendService) UpdateByFilter(ctx context.Context, in *RequestUpdate
 
 type RecommendServiceHandler interface {
 	AddOne(context.Context, *ReqRecommendAdd, *ReplyRecommendInfo) error
-	UpdateOne(context.Context, *RequestInfo, *ReplyRecommendInfo) error
+	UpdateOne(context.Context, *ReqRecommendUpdate, *ReplyRecommendInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyRecommendInfo) error
 	GetList(context.Context, *RequestPage, *ReplyRecommendList) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
@@ -152,7 +152,7 @@ type RecommendServiceHandler interface {
 func RegisterRecommendServiceHandler(s server.Server, hdlr RecommendServiceHandler, opts ...server.HandlerOption) error {
 	type recommendService interface {
 		AddOne(ctx context.Context, in *ReqRecommendAdd, out *ReplyRecommendInfo) error
-		UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyRecommendInfo) error
+		UpdateOne(ctx context.Context, in *ReqRecommendUpdate, out *ReplyRecommendInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyRecommendInfo) error
 		GetList(ctx context.Context, in *RequestPage, out *ReplyRecommendList) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
@@ -175,7 +175,7 @@ func (h *recommendServiceHandler) AddOne(ctx context.Context, in *ReqRecommendAd
 	return h.RecommendServiceHandler.AddOne(ctx, in, out)
 }
 
-func (h *recommendServiceHandler) UpdateOne(ctx context.Context, in *RequestInfo, out *ReplyRecommendInfo) error {
+func (h *recommendServiceHandler) UpdateOne(ctx context.Context, in *ReqRecommendUpdate, out *ReplyRecommendInfo) error {
 	return h.RecommendServiceHandler.UpdateOne(ctx, in, out)
 }
 
