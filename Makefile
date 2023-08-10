@@ -6,4 +6,4 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/motion.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/carousel.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/recommend.proto
-	protoc --proto_path=. --micro_out=. --go_out=. proto/third/topic.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/third/schedule.proto
