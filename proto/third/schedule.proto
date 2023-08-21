@@ -53,6 +53,7 @@ message ReqScheduleAdd{
   DurationInfo date = 11;
   DurationInfo time = 12;
   repeated string targets = 15;
+  repeated uint32 weekdays = 16;
 }
 
 message ReplyScheduleInfo {
