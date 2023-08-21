@@ -36,6 +36,7 @@ var _ server.Option
 type HolidayService interface {
 	AddOne(ctx context.Context, in *ReqHolidayAdd, opts ...client.CallOption) (*ReplyHolidayInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyHolidayInfo, error)
+	UpdateBase(ctx context.Context, in *ReqHolidayUpdate, opts ...client.CallOption) (*ReplyHolidayInfo, error)
 	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyHolidayList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
@@ -66,6 +67,16 @@ func (c *holidayService) AddOne(ctx context.Context, in *ReqHolidayAdd, opts ...
 
 func (c *holidayService) GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyHolidayInfo, error) {
 	req := c.c.NewRequest(c.name, "HolidayService.GetOne", in)
+	out := new(ReplyHolidayInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *holidayService) UpdateBase(ctx context.Context, in *ReqHolidayUpdate, opts ...client.CallOption) (*ReplyHolidayInfo, error) {
+	req := c.c.NewRequest(c.name, "HolidayService.UpdateBase", in)
 	out := new(ReplyHolidayInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -119,6 +130,7 @@ func (c *holidayService) RemoveOne(ctx context.Context, in *RequestInfo, opts ..
 type HolidayServiceHandler interface {
 	AddOne(context.Context, *ReqHolidayAdd, *ReplyHolidayInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyHolidayInfo) error
+	UpdateBase(context.Context, *ReqHolidayUpdate, *ReplyHolidayInfo) error
 	GetByFilter(context.Context, *RequestFilter, *ReplyHolidayList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
@@ -129,6 +141,7 @@ func RegisterHolidayServiceHandler(s server.Server, hdlr HolidayServiceHandler, 
 	type holidayService interface {
 		AddOne(ctx context.Context, in *ReqHolidayAdd, out *ReplyHolidayInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyHolidayInfo) error
+		UpdateBase(ctx context.Context, in *ReqHolidayUpdate, out *ReplyHolidayInfo) error
 		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyHolidayList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
@@ -151,6 +164,10 @@ func (h *holidayServiceHandler) AddOne(ctx context.Context, in *ReqHolidayAdd, o
 
 func (h *holidayServiceHandler) GetOne(ctx context.Context, in *RequestInfo, out *ReplyHolidayInfo) error {
 	return h.HolidayServiceHandler.GetOne(ctx, in, out)
+}
+
+func (h *holidayServiceHandler) UpdateBase(ctx context.Context, in *ReqHolidayUpdate, out *ReplyHolidayInfo) error {
+	return h.HolidayServiceHandler.UpdateBase(ctx, in, out)
 }
 
 func (h *holidayServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyHolidayList) error {

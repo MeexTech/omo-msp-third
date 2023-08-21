@@ -31,6 +31,7 @@ message ScheduleInfo {
   uint32 ignore = 14;
   DurationInfo date = 21;
   DurationInfo time = 22;
+  repeated uint32 weekdays = 30;
   repeated string targets = 31;
 }
 

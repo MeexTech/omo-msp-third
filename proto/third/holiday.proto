@@ -7,6 +7,7 @@ import "proto/third/common.proto";
 service HolidayService {
   rpc AddOne(ReqHolidayAdd) returns (ReplyHolidayInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyHolidayInfo) {}
+  rpc UpdateBase(ReqHolidayUpdate) returns (ReplyHolidayInfo){}
   rpc GetByFilter(RequestFilter) returns (ReplyHolidayList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
@@ -34,6 +35,15 @@ message ReqHolidayAdd{
   string name = 2;
   string remark = 3;
   string owner = 4;
+  string operator = 5;
+  int64 from = 6;
+  int64 end = 7;
+}
+
+message ReqHolidayUpdate{
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
   string operator = 5;
   int64 from = 6;
   int64 end = 7;
