@@ -3,6 +3,13 @@ syntax = "proto3";
 package omo.msp.third;
 option go_package= "proto/third";
 
+message PairInfo{
+  string key = 1;
+  uint32 id = 2;
+  uint32 count = 3;
+  string value = 4;
+}
+
 message RequestInfo {
   string uid = 1;
   string operator = 2;
@@ -53,4 +60,5 @@ message ReplyStatistic {
   string key = 2;
   string owner = 3;
   uint32 count = 4;
+  repeated PairInfo list = 10;
 }

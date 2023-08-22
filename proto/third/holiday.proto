@@ -38,6 +38,7 @@ message ReqHolidayAdd{
   string operator = 5;
   int64 from = 6;
   int64 end = 7;
+  uint32 type = 9;
 }
 
 message ReqHolidayUpdate{
