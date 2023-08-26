@@ -26,7 +26,7 @@ message ScheduleInfo {
   string remark = 9;
   string owner = 10;
   uint32 status = 11;
-  string sheet = 12;
+  string quote = 12;
   string color = 13;
   uint32 ignore = 14;
   DurationInfo date = 21;
@@ -46,7 +46,7 @@ message ReqScheduleAdd{
   string remark = 3;
   string owner = 4;
   string operator = 5;
-  string sheet = 6;
+  string quote = 6;
   string color = 7;
   uint32 ignore = 8;
   uint32 type = 9;
