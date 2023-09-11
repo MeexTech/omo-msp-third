@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service RecordService {
+  rpc AddOne(ReqRecordAdd) returns (ReplyRecordInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyRecordInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyRecordList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+}
+
+message RecordInfo {
+  string uid = 1;
+  uint64 id = 2;
+  uint32 type = 3;
+  int64 created = 4;
+  string creator = 5;
+  string name = 6;
+  string quote = 7;
+  string scene = 8;
+  uint32 size = 9;
+  string template = 10;
+  string target = 11;
+  repeated ContentInfo contents = 21;
+}
+
+message ContentInfo{
+  string uid = 1;
+  uint32 size = 2;
+  repeated string events = 10;
+  repeated string assets = 11;
+}
+
+message ReqRecordAdd{
+  uint32 type = 3;
+  string scene = 4;
+  string operator = 5;
+  string quote = 6;
+  string template = 7;
+  string target = 8;
+  repeated ContentInfo contents = 11;
+}
+
+message ReplyRecordInfo {
+  ReplyStatus status = 1;
+  RecordInfo info = 2;
+}
+
+message ReplyRecordList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated RecordInfo list = 16;
+}
