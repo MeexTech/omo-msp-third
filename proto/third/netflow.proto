@@ -4,16 +4,16 @@ package omo.msp.third;
 option go_package= "proto/third";
 import "proto/third/common.proto";
 
-service RecordService {
-  rpc AddOne(ReqRecordAdd) returns (ReplyRecordInfo) {}
-  rpc GetOne(RequestInfo) returns (ReplyRecordInfo) {}
-  rpc GetByFilter(RequestFilter) returns (ReplyRecordList) {}
+service NetflowService {
+  rpc AddOne(ReqNetflowAdd) returns (ReplyNetflowInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyNetflowInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyNetflowList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
 }
 
-message RecordInfo {
+message NetflowInfo {
   string uid = 1;
   uint64 id = 2;
   uint32 type = 3;
@@ -31,11 +31,11 @@ message RecordInfo {
 message ContentInfo{
   string uid = 1;
   uint32 size = 2;
-  repeated string events = 10;
-  repeated string assets = 11;
+  string group = 3;
+  uint32 type = 4;
 }
 
-message ReqRecordAdd{
+message ReqNetflowAdd{
   uint32 type = 3;
   string scene = 4;
   string operator = 5;
@@ -45,16 +45,16 @@ message ReqRecordAdd{
   repeated ContentInfo contents = 11;
 }
 
-message ReplyRecordInfo {
+message ReplyNetflowInfo {
   ReplyStatus status = 1;
-  RecordInfo info = 2;
+  NetflowInfo info = 2;
 }
 
-message ReplyRecordList {
+message ReplyNetflowList {
   ReplyStatus status = 1;
   uint32 total = 2;
   uint32 pages = 3;
   uint32 page = 4;
   uint32 number = 5;
-  repeated RecordInfo list = 16;
+  repeated NetflowInfo list = 16;
 }
