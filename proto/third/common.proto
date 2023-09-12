@@ -5,8 +5,8 @@ option go_package= "proto/third";
 
 message PairInfo{
   string key = 1;
-  uint32 id = 2;
-  uint32 count = 3;
+  uint64 id = 2;
+  uint64 count = 3;
   string value = 4;
 }
 
@@ -59,6 +59,6 @@ message ReplyStatistic {
   ReplyStatus status = 1;
   string key = 2;
   string owner = 3;
-  uint32 count = 4;
+  uint64 count = 4;
   repeated PairInfo list = 10;
 }

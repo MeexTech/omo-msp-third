@@ -22,7 +22,7 @@ message NetflowInfo {
   string name = 6;
   string quote = 7;
   string scene = 8;
-  uint32 size = 9;
+  uint64 size = 9;
   string template = 10;
   string target = 11;
   repeated ContentInfo contents = 21;
@@ -30,9 +30,10 @@ message NetflowInfo {
 
 message ContentInfo{
   string uid = 1;
-  uint32 size = 2;
+  uint64 size = 2;
   string group = 3;
   uint32 type = 4;
+  repeated string children = 10;
 }
 
 message ReqNetflowAdd{
