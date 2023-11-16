@@ -25,7 +25,7 @@ message RecommendInfo {
   string name = 7;
   string owner = 8;
   uint32 type = 9;
-  uint32 quote = 10;
+  string quote = 10;
   repeated string targets = 31;
 }
 
