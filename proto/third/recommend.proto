@@ -25,6 +25,7 @@ message RecommendInfo {
   string name = 7;
   string owner = 8;
   uint32 type = 9;
+  uint32 quote = 10;
   repeated string targets = 31;
 }
 
@@ -34,6 +35,7 @@ message ReqRecommendAdd {
   string remark = 3;
   string operator = 4;
   uint32 type = 5;
+  string quote = 6;
   repeated string targets = 21;
 }
 
