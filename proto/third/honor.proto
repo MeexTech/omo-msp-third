@@ -47,6 +47,7 @@ message ReqHonorAdd{
   string style = 5;
   uint32 type = 6;
   uint32 status = 7;
+  string parent = 8;
 }
 
 message ReqHonorUpdate{
