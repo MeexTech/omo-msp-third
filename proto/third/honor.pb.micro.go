@@ -40,9 +40,9 @@ type HonorService interface {
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
 	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	Update(ctx context.Context, in *ReqHonorUpdate, opts ...client.CallOption) (*ReplyHonorInfo, error)
-	Status(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyInfo, error)
-	Contents(ctx context.Context, in *ReqHonorContents, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateBase(ctx context.Context, in *ReqHonorUpdate, opts ...client.CallOption) (*ReplyHonorInfo, error)
+	UpdateStatus(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyInfo, error)
+	UpdateContents(ctx context.Context, in *ReqHonorContents, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type honorService struct {
@@ -117,8 +117,8 @@ func (c *honorService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...c
 	return out, nil
 }
 
-func (c *honorService) Update(ctx context.Context, in *ReqHonorUpdate, opts ...client.CallOption) (*ReplyHonorInfo, error) {
-	req := c.c.NewRequest(c.name, "HonorService.Update", in)
+func (c *honorService) UpdateBase(ctx context.Context, in *ReqHonorUpdate, opts ...client.CallOption) (*ReplyHonorInfo, error) {
+	req := c.c.NewRequest(c.name, "HonorService.UpdateBase", in)
 	out := new(ReplyHonorInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -127,8 +127,8 @@ func (c *honorService) Update(ctx context.Context, in *ReqHonorUpdate, opts ...c
 	return out, nil
 }
 
-func (c *honorService) Status(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyInfo, error) {
-	req := c.c.NewRequest(c.name, "HonorService.Status", in)
+func (c *honorService) UpdateStatus(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "HonorService.UpdateStatus", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -137,8 +137,8 @@ func (c *honorService) Status(ctx context.Context, in *RequestFlag, opts ...clie
 	return out, nil
 }
 
-func (c *honorService) Contents(ctx context.Context, in *ReqHonorContents, opts ...client.CallOption) (*ReplyInfo, error) {
-	req := c.c.NewRequest(c.name, "HonorService.Contents", in)
+func (c *honorService) UpdateContents(ctx context.Context, in *ReqHonorContents, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "HonorService.UpdateContents", in)
 	out := new(ReplyInfo)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -156,9 +156,9 @@ type HonorServiceHandler interface {
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
 	UpdateByFilter(context.Context, *RequestUpdate, *ReplyInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	Update(context.Context, *ReqHonorUpdate, *ReplyHonorInfo) error
-	Status(context.Context, *RequestFlag, *ReplyInfo) error
-	Contents(context.Context, *ReqHonorContents, *ReplyInfo) error
+	UpdateBase(context.Context, *ReqHonorUpdate, *ReplyHonorInfo) error
+	UpdateStatus(context.Context, *RequestFlag, *ReplyInfo) error
+	UpdateContents(context.Context, *ReqHonorContents, *ReplyInfo) error
 }
 
 func RegisterHonorServiceHandler(s server.Server, hdlr HonorServiceHandler, opts ...server.HandlerOption) error {
@@ -169,9 +169,9 @@ func RegisterHonorServiceHandler(s server.Server, hdlr HonorServiceHandler, opts
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
 		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		Update(ctx context.Context, in *ReqHonorUpdate, out *ReplyHonorInfo) error
-		Status(ctx context.Context, in *RequestFlag, out *ReplyInfo) error
-		Contents(ctx context.Context, in *ReqHonorContents, out *ReplyInfo) error
+		UpdateBase(ctx context.Context, in *ReqHonorUpdate, out *ReplyHonorInfo) error
+		UpdateStatus(ctx context.Context, in *RequestFlag, out *ReplyInfo) error
+		UpdateContents(ctx context.Context, in *ReqHonorContents, out *ReplyInfo) error
 	}
 	type HonorService struct {
 		honorService
@@ -208,14 +208,14 @@ func (h *honorServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, ou
 	return h.HonorServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *honorServiceHandler) Update(ctx context.Context, in *ReqHonorUpdate, out *ReplyHonorInfo) error {
-	return h.HonorServiceHandler.Update(ctx, in, out)
+func (h *honorServiceHandler) UpdateBase(ctx context.Context, in *ReqHonorUpdate, out *ReplyHonorInfo) error {
+	return h.HonorServiceHandler.UpdateBase(ctx, in, out)
 }
 
-func (h *honorServiceHandler) Status(ctx context.Context, in *RequestFlag, out *ReplyInfo) error {
-	return h.HonorServiceHandler.Status(ctx, in, out)
+func (h *honorServiceHandler) UpdateStatus(ctx context.Context, in *RequestFlag, out *ReplyInfo) error {
+	return h.HonorServiceHandler.UpdateStatus(ctx, in, out)
 }
 
-func (h *honorServiceHandler) Contents(ctx context.Context, in *ReqHonorContents, out *ReplyInfo) error {
-	return h.HonorServiceHandler.Contents(ctx, in, out)
+func (h *honorServiceHandler) UpdateContents(ctx context.Context, in *ReqHonorContents, out *ReplyInfo) error {
+	return h.HonorServiceHandler.UpdateContents(ctx, in, out)
 }

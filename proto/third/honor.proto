@@ -11,9 +11,9 @@ service HonorService {
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
   rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-  rpc Update(ReqHonorUpdate) returns (ReplyHonorInfo){}
-  rpc Status(RequestFlag) returns (ReplyInfo){}
-  rpc Contents(ReqHonorContents)returns(ReplyInfo){}
+  rpc UpdateBase(ReqHonorUpdate) returns (ReplyHonorInfo){}
+  rpc UpdateStatus(RequestFlag) returns (ReplyInfo){}
+  rpc UpdateContents(ReqHonorContents)returns(ReplyInfo){}
 }
 
 message HonorInfo {
