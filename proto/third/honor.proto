@@ -13,6 +13,7 @@ service HonorService {
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc Update(ReqHonorUpdate) returns (ReplyHonorInfo){}
   rpc Status(RequestFlag) returns (ReplyInfo){}
+  rpc Contents(ReqHonorContents)returns(ReplyInfo){}
 }
 
 message HonorInfo {
@@ -54,7 +55,12 @@ message ReqHonorUpdate{
   string remark = 3;
   string operator = 4;
   string style = 5;
-  uint32 status = 6;
+}
+
+message ReqHonorContents{
+  string uid = 1;
+  string operator = 2;
+  repeated HonorContent list = 10;
 }
 
 message ReplyHonorInfo {

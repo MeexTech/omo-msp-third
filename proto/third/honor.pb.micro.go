@@ -42,6 +42,7 @@ type HonorService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	Update(ctx context.Context, in *ReqHonorUpdate, opts ...client.CallOption) (*ReplyHonorInfo, error)
 	Status(ctx context.Context, in *RequestFlag, opts ...client.CallOption) (*ReplyInfo, error)
+	Contents(ctx context.Context, in *ReqHonorContents, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type honorService struct {
@@ -136,6 +137,16 @@ func (c *honorService) Status(ctx context.Context, in *RequestFlag, opts ...clie
 	return out, nil
 }
 
+func (c *honorService) Contents(ctx context.Context, in *ReqHonorContents, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "HonorService.Contents", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for HonorService service
 
 type HonorServiceHandler interface {
@@ -147,6 +158,7 @@ type HonorServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	Update(context.Context, *ReqHonorUpdate, *ReplyHonorInfo) error
 	Status(context.Context, *RequestFlag, *ReplyInfo) error
+	Contents(context.Context, *ReqHonorContents, *ReplyInfo) error
 }
 
 func RegisterHonorServiceHandler(s server.Server, hdlr HonorServiceHandler, opts ...server.HandlerOption) error {
@@ -159,6 +171,7 @@ func RegisterHonorServiceHandler(s server.Server, hdlr HonorServiceHandler, opts
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		Update(ctx context.Context, in *ReqHonorUpdate, out *ReplyHonorInfo) error
 		Status(ctx context.Context, in *RequestFlag, out *ReplyInfo) error
+		Contents(ctx context.Context, in *ReqHonorContents, out *ReplyInfo) error
 	}
 	type HonorService struct {
 		honorService
@@ -201,4 +214,8 @@ func (h *honorServiceHandler) Update(ctx context.Context, in *ReqHonorUpdate, ou
 
 func (h *honorServiceHandler) Status(ctx context.Context, in *RequestFlag, out *ReplyInfo) error {
 	return h.HonorServiceHandler.Status(ctx, in, out)
+}
+
+func (h *honorServiceHandler) Contents(ctx context.Context, in *ReqHonorContents, out *ReplyInfo) error {
+	return h.HonorServiceHandler.Contents(ctx, in, out)
 }
