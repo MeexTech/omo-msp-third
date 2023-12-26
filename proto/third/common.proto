@@ -21,6 +21,12 @@ message RequestIDInfo {
   string operator = 2;
 }
 
+message RequestFlag{
+  string uid = 1;
+  string operator = 2;
+  uint32 flag = 3;
+}
+
 message RequestPage {
   uint32 number = 1;
   uint32 page = 2;

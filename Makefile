@@ -9,3 +9,4 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/schedule.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/holiday.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/netflow.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/third/honor.proto
