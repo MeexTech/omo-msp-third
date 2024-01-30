@@ -39,6 +39,7 @@ message ReqMotionAdd{
   string operator = 5;
   uint32 count = 6;
   string content = 7;
+  uint32 type = 8;
 }
 
 message ReplyMotionInfo {
