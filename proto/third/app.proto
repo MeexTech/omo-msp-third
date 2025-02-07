@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service AppService {
+  rpc AddOne(ReqAppAdd) returns (ReplyAppInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyAppInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyAppList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+}
+
+message AppInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string app = 8;
+  string version = 9;
+  string secret = 10;
+  uint32 status = 11;
+}
+
+message ReqAppAdd {
+  string name = 1;
+  string app = 2;
+  string secret = 3;
+  string operator = 4;
+  string version = 5;
+  uint32 status = 6;
+}
+
+message ReplyAppInfo {
+  AppInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyAppList {
+  ReplyStatus status = 1;
+  uint64 total = 2;
+  uint32 pageMax = 3;
+  uint32 pageNow = 4;
+  repeated AppInfo list = 21;
+}
