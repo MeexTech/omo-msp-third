@@ -9,6 +9,7 @@ service KMSService {
   rpc GetOne(RequestInfo) returns (ReplyKMSInfo) {}
   rpc GetByFilter(RequestFilter) returns (ReplyKMSList) {}
   rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc Remove(RequestInfo) returns (ReplyInfo) {}
 }
 
 message KMSInfo {

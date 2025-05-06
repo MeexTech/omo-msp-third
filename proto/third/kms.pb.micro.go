@@ -38,6 +38,7 @@ type KMSService interface {
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyKMSInfo, error)
 	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyKMSList, error)
 	GetStatistic(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyStatistic, error)
+	Remove(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 }
 
 type kMSService struct {
@@ -92,6 +93,16 @@ func (c *kMSService) GetStatistic(ctx context.Context, in *RequestFilter, opts .
 	return out, nil
 }
 
+func (c *kMSService) Remove(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "KMSService.Remove", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for KMSService service
 
 type KMSServiceHandler interface {
@@ -99,6 +110,7 @@ type KMSServiceHandler interface {
 	GetOne(context.Context, *RequestInfo, *ReplyKMSInfo) error
 	GetByFilter(context.Context, *RequestFilter, *ReplyKMSList) error
 	GetStatistic(context.Context, *RequestFilter, *ReplyStatistic) error
+	Remove(context.Context, *RequestInfo, *ReplyInfo) error
 }
 
 func RegisterKMSServiceHandler(s server.Server, hdlr KMSServiceHandler, opts ...server.HandlerOption) error {
@@ -107,6 +119,7 @@ func RegisterKMSServiceHandler(s server.Server, hdlr KMSServiceHandler, opts ...
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyKMSInfo) error
 		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyKMSList) error
 		GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error
+		Remove(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 	}
 	type KMSService struct {
 		kMSService
@@ -133,4 +146,8 @@ func (h *kMSServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, 
 
 func (h *kMSServiceHandler) GetStatistic(ctx context.Context, in *RequestFilter, out *ReplyStatistic) error {
 	return h.KMSServiceHandler.GetStatistic(ctx, in, out)
+}
+
+func (h *kMSServiceHandler) Remove(ctx context.Context, in *RequestInfo, out *ReplyInfo) error {
+	return h.KMSServiceHandler.Remove(ctx, in, out)
 }
