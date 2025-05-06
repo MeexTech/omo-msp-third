@@ -11,3 +11,4 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/netflow.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/honor.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/third/app.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/third/kms.proto

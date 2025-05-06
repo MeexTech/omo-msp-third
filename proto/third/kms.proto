@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service KMSService {
+  rpc AddOne(ReqKMSAdd) returns (ReplyKMSInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyKMSInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyKMSList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+}
+
+message KMSInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 4;
+  int64 updated = 5;
+  string creator = 6;
+  string operator = 7;
+  string name = 8;
+  string remark = 9;
+  string sn = 10;
+  string consumer = 11;
+  string space = 12;
+  string scene = 13;
+  string owner = 14;
+  string content = 15;
+  uint32 expiry = 16;
+}
+
+message ReqKMSAdd{
+  string owner = 1;
+  string sn = 2;
+  string consumer = 3;
+  string scene = 4;
+  string operator = 5;
+  uint32 expiry = 6;
+  string content = 7;
+  string remark = 8;
+  string space = 9;
+  string name = 10;
+}
+
+message ReplyKMSInfo {
+  ReplyStatus status = 1;
+  KMSInfo info = 2;
+}
+
+message ReplyKMSList {
+  ReplyStatus status = 1;
+  uint32 total = 2;
+  uint32 pages = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated KMSInfo list = 16;
+}
