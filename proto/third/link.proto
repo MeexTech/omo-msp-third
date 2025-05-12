@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+package omo.msp.third;
+option go_package= "proto/third";
+import "proto/third/common.proto";
+
+service LinkService {
+  rpc AddOne(ReqLinkAdd) returns (ReplyLinkInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyLinkInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetByFilter(RequestFilter) returns (ReplyLinkList) {}
+  rpc GetStatistic(RequestFilter) returns (ReplyStatistic) {}
+  rpc UpdateByFilter(RequestUpdate) returns (ReplyInfo) {}
+}
+
+message LinkInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string remark = 8;
+  string cover = 9;
+  string scene = 10;
+  uint32 kind = 11;
+  string addr = 12;
+}
+
+message ReqLinkAdd {
+  string name = 1;
+  string remark = 2;
+  string scene = 3;
+  string operator = 4;
+  string addr = 5;
+  string cover = 6;
+}
+
+message ReplyLinkInfo {
+  LinkInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyLinkList {
+  ReplyStatus status = 1;
+  uint64 total = 2;
+  uint32 pageMax = 3;
+  uint32 pageNow = 4;
+  repeated LinkInfo list = 21;
+}
