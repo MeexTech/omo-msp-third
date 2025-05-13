@@ -27,6 +27,7 @@ message ReserveInfo {
   uint32 count = 11;
   string date = 12;
   uint32 type = 13;
+  uint32 status = 14;
 }
 
 message ReqReserveAdd {
