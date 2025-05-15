@@ -24,6 +24,9 @@ message CarouselInfo {
   string operator = 6;
   string name = 7;
   string owner = 8;
+  string remark = 9;
+  string cover = 10;
+  repeated string assets = 30;
   repeated QuoteInfo quotes = 31;
 }
 
@@ -47,6 +50,9 @@ message ReqCarouselUpdate {
   string uid = 1;
   string name = 2;
   string operator = 3;
+  string remark = 4;
+  string cover = 5;
+  repeated string assets = 20;
   repeated QuoteInfo quotes = 21;
 }
 
