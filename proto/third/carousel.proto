@@ -43,6 +43,8 @@ message ReqCarouselAdd {
   string owner = 2;
   string remark = 3;
   string operator = 4;
+  string cover = 5;
+  repeated string assets = 20;
   repeated QuoteInfo quotes = 21;
 }
 
