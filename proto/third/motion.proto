@@ -40,6 +40,7 @@ message ReqMotionAdd{
   uint32 count = 6;
   string content = 7;
   uint32 type = 8;
+  repeated PairInfo list = 20;
 }
 
 message ReplyMotionInfo {
