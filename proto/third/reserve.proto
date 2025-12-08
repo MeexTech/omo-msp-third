@@ -28,6 +28,7 @@ message ReserveInfo {
   string date = 12;
   uint32 type = 13;
   uint32 status = 14;
+  string uint = 15;
 }
 
 message ReqReserveAdd {
@@ -38,6 +39,8 @@ message ReqReserveAdd {
   string scene = 5;
   uint32 kind = 6;
   uint32 count = 7;
+  string uint = 8;
+  string date = 9;
 }
 
 message ReplyReserveInfo {
