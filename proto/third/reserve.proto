@@ -31,7 +31,7 @@ message ReserveInfo {
   string uint = 15;
   uint32 begin = 16;
   uint32 end = 17;
-  string asset = 18;
+  repeated string assets = 21;
 }
 
 message ReqReserveAdd {
@@ -44,9 +44,9 @@ message ReqReserveAdd {
   uint32 count = 7;
   string uint = 8;
   string date = 9;
-  string asset = 10;
-  uint32 begin = 11;
-  uint32 end = 12;
+  uint32 begin = 10;
+  uint32 end = 11;
+  repeated string assets = 21;
 }
 
 message ReplyReserveInfo {
