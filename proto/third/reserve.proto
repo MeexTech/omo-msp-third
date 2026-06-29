@@ -32,6 +32,7 @@ message ReserveInfo {
   uint32 begin = 16;
   uint32 end = 17;
   string card = 18;
+  string target = 19;
   repeated string assets = 21;
 }
 
@@ -48,6 +49,7 @@ message ReqReserveAdd {
   uint32 begin = 10;
   uint32 end = 11;
   string card = 12;
+  string target = 13;
   repeated string assets = 21;
 }
 
